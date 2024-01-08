@@ -3,6 +3,7 @@ package com.example.secondProducer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -11,6 +12,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
@@ -25,6 +27,20 @@ public class SecondProducerApplication {
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+	}
+
+	@Async
+	public CompletableFuture<Void> sendMessageAsync(String topic, String message) {
+		CompletableFuture<Void> future = new CompletableFuture<>();
+
+		try {
+			sendMessage(topic, message);
+			future.complete(null);
+		} catch (Exception e) {
+			future.completeExceptionally(e);
+		}
+
+		return future;
 	}
 
 	public void sendMessage(String topic, String message) {
@@ -44,7 +60,7 @@ public class SecondProducerApplication {
 			for (int i = 0; i < 10; i++) {
 
 				key = String.valueOf(i);
-				value = nowtime+" "+String.valueOf(i);
+				value = nowtime + " " + String.valueOf(i);
 
 				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
 
