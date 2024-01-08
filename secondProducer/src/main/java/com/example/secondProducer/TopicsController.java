@@ -1,5 +1,7 @@
 package com.example.secondProducer;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +16,18 @@ public class TopicsController {
 	 @Autowired
 	    private SecondProducerApplication firstProducer;
 
-	    @PostMapping
-	    public String postMessages(@RequestParam String topic_name1,String message1,
-	    		String topic_name2,String message2,String topic_name3,String message3) {
-	            firstProducer.sendMessage(topic_name1, message1);
-	            firstProducer.sendMessage(topic_name2, message2);
-	            firstProducer.sendMessage(topic_name3, message3);
+	 	@PostMapping("/topics")
+	    public String postMessages( @RequestParam(name = "topic_name1") String topicName1, @RequestParam(name = "message1") String message1,
+	            @RequestParam(name = "topic_name2") String topicName2, @RequestParam(name = "message2") String message2,
+	            @RequestParam(name = "topic_name3") String topicName3, @RequestParam(name = "message3") String message3) {
+	            
+	            CompletableFuture<Void> future1 = firstProducer.sendMessageAsync(topicName1, message1);
+	            CompletableFuture<Void> future2 = firstProducer.sendMessageAsync(topicName2, message2);
+	            CompletableFuture<Void> future3 = firstProducer.sendMessageAsync(topicName3, message3);
+
+	            // Wait for all asynchronous operations to complete
+	            CompletableFuture.allOf(future1, future2, future3).join();
+	            
 	        return "confirmation";
 	    }
 	    

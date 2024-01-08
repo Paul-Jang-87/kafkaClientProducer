@@ -7,44 +7,15 @@
 <body>
 	<h2>Hello World!</h2>
 	
-	<!-- 
-
-	<form action="/topics1" method="post">
-		<div>
-			<input type="text" name="topic_name1" placeholder="Topic Name" /> <input
-				type="text" name="message1" placeholder="Message" />
-			
-		</div>
-
-		<input type="submit" value="submit">
-	</form>
-	
-	<form action="/topics2" method="post">
-		<div>
-			<input type="text" name="topic_name2" placeholder="Topic Name" /> <input
-				type="text" name="message2" placeholder="Message" />
-			
-		</div>
+	<form action="/topics" method="post">
+		<th:block th:each="index : ${#numbers.sequence(1,3)}">
+			<div th:attr="id='div'+${index}">
+				<input th:attr="name='topic_name'+${index}" type="text" placeholder="Topic Name" /> 
+				<input th:attr="name='message'+${index}" type="text" placeholder="Message" />
+			</div>
+		</th:block>
 
 		<input type="submit" value="submit">
 	</form>
-	<form action="/topics3" method="post">
-		<div>
-			<input type="text" name="topic_name3" placeholder="Topic Name" /> <input
-				type="text" name="message3" placeholder="Message" />
-			
-		</div>
-
-		<input type="submit" value="submit">
-	</form>
-	  -->
-
- 
-	<th:block th:each="num : ${#numbers.sequence(1,5)}">
-		<div th:text="${num}">a</div>
-	</th:block>
-
-	
-
 </body>
 </html>
