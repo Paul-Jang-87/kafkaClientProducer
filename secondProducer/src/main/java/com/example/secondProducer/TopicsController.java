@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/topics")
 public class TopicsController {
 	
 	 @Autowired
@@ -24,10 +23,10 @@ public class TopicsController {
 	        return "confirmation";
 	    }
 	    
-	    @GetMapping("/hello")
+	    @GetMapping("/confirmation")
 	    public String hello(Model model) {
 	        model.addAttribute("message", "Welcome to Thymeleaf!");
-	        return "hello";
+	        return "confirmation";
 	    }
 
 }

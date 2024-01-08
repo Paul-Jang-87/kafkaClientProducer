@@ -57,7 +57,7 @@ public class SecondProducerApplication {
 			Date now = new Date();
 			String nowtime = form.format(now);
 
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 
 				key = String.valueOf(i);
 				value = nowtime + " " + String.valueOf(i);
