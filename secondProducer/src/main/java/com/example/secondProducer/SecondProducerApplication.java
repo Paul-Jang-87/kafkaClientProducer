@@ -57,10 +57,10 @@ public class SecondProducerApplication {
 			Date now = new Date();
 			String nowtime = form.format(now);
 
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 2; i++) {
 
 				key = String.valueOf(i);
-				value = nowtime + " " + String.valueOf(i);
+				value = nowtime + " " + String.valueOf(i)+" "+message;
 
 				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
 
