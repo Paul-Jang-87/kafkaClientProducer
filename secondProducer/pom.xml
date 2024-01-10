@@ -51,16 +51,22 @@
 			<artifactId>kafka-clients</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.mypurecloud</groupId>
+			<artifactId>platform-client-v2</artifactId>
+			<version>198.1.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<plugins>
-			
+
 			<plugin>
 				<groupId>org.graalvm.buildtools</groupId>
 				<artifactId>native-maven-plugin</artifactId>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

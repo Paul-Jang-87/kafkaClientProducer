@@ -1,6 +1,8 @@
 package com.example.secondProducer;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
@@ -14,6 +16,10 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import com.example.secondProducer.genesys.users.UserApiClient;
+import com.mypurecloud.sdk.v2.ApiException;
+import com.mypurecloud.sdk.v2.model.UserEntityListing;
 
 import jakarta.annotation.PostConstruct;
 
@@ -34,7 +40,8 @@ public class SecondProducerApplication {
 		CompletableFuture<Void> future = new CompletableFuture<>();
 
 		try {
-			sendMessage(topic, message);
+			a();
+			//sendMessage(topic, message);
 			future.complete(null);
 		} catch (Exception e) {
 			future.completeExceptionally(e);
@@ -42,6 +49,20 @@ public class SecondProducerApplication {
 
 		return future;
 	}
+	
+	public void a () {
+		String accessToken = "your_access_token";
+	    UserApiClient userApiClient = new UserApiClient(accessToken);
+
+	    try {
+	        UserEntityListing users = userApiClient.getUsers(25, 1, Arrays.asList(null), Arrays.asList(null), "ASC", Arrays.asList(null), "integrationPresenceSource_example", "active");
+	        // Process the 'users' object as needed
+	        System.out.println(users);
+	    } catch (IOException | ApiException e) {
+	        e.printStackTrace();
+	    }	
+	}
+	
 
 	public void sendMessage(String topic, String message) {
 
