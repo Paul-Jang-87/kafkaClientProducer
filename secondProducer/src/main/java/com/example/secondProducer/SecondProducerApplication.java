@@ -2,7 +2,6 @@ package com.example.secondProducer;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
@@ -14,13 +13,14 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.example.secondProducer.genesys.users.UserApiClient;
 import com.mypurecloud.sdk.v2.ApiException;
-import com.mypurecloud.sdk.v2.model.UserEntityListing;
 
+import genesysapi.ApiConfigure;
 import jakarta.annotation.PostConstruct;
 
 @Service
@@ -40,8 +40,7 @@ public class SecondProducerApplication {
 		CompletableFuture<Void> future = new CompletableFuture<>();
 
 		try {
-			a();
-			//sendMessage(topic, message);
+			sendMessage(topic, message);
 			future.complete(null);
 		} catch (Exception e) {
 			future.completeExceptionally(e);
@@ -50,38 +49,45 @@ public class SecondProducerApplication {
 		return future;
 	}
 	
-	public void a () {
-		String accessToken = "your_access_token";
-	    UserApiClient userApiClient = new UserApiClient(accessToken);
-
-	    try {
-	        UserEntityListing users = userApiClient.getUsers(25, 1, Arrays.asList(null), Arrays.asList(null), "ASC", Arrays.asList(null), "integrationPresenceSource_example", "active");
-	        // Process the 'users' object as needed
-	        System.out.println(users);
-	    } catch (IOException | ApiException e) {
-	        e.printStackTrace();
-	    }	
-	}
+	
+	
 	
 
 	public void sendMessage(String topic, String message) {
+		JSONArray entities = null ;
+		ApiConfigure apitest = null;
+		JSONObject json = null;
+		
+		try {
+			apitest = new ApiConfigure();
+			String url = "https://api.apne2.pure.cloud/api/v2/outbound/campaigns";
+			json = apitest.callApiRestTemplate_GET(url);
+			entities = json.getJSONArray("entities");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Producer<String, String> producer = new KafkaProducer<String, String>(props);
-		System.out.println(topic + ", " + message);
+		System.out.println(topic + ", " + entities);
 
 		String key = "";
 		String value = "";
 
 		try {
 
-			SimpleDateFormat form = new SimpleDateFormat("MM/dd::hh/mm/ss");
+			SimpleDateFormat form = new SimpleDateFormat("hh:mm:ss");
 			Date now = new Date();
 			String nowtime = form.format(now);
 
 			for (int i = 0; i < 2; i++) {
 
 				key = String.valueOf(i);
-				value = nowtime + " " + String.valueOf(i)+" "+message;
+				value = nowtime + " " + String.valueOf(i)+" "+entities+" "+message;
 
 				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
 

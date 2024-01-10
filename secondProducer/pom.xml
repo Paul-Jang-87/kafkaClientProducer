@@ -51,10 +51,25 @@
 			<artifactId>kafka-clients</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
-			<groupId>com.mypurecloud</groupId>
-			<artifactId>platform-client-v2</artifactId>
-			<version>198.1.0</version>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20231013</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.mypurecloud/platform-client-v2 -->
+		<dependency>
+		    <groupId>com.mypurecloud</groupId>
+		    <artifactId>platform-client-v2</artifactId>
+		    <version>198.1.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.14</version>
 		</dependency>
 
 	</dependencies>
