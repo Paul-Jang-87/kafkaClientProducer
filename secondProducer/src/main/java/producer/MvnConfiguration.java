@@ -1,4 +1,4 @@
-package com.example.secondProducer;
+package producer;
 
 import java.util.concurrent.TimeUnit;
 
