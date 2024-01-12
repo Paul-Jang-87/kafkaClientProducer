@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TopicsController {
 	
 	@Autowired
-    private SecondProducerApplication firstProducer;
+    private KafkaProducerApp firstProducer;
 
     @PostMapping("/topics")
     public String postMessages(@RequestParam List<String> topicNames, @RequestParam List<String> messages) {

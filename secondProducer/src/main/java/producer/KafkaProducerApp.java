@@ -19,7 +19,7 @@ import jakarta.annotation.PostConstruct;
 import webclient.WebClientApp;
 
 @Service
-public class SecondProducerApplication {
+public class KafkaProducerApp {
 
 	private Properties props = new Properties();
 
