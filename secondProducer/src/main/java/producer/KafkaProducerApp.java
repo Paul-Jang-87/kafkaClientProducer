@@ -46,7 +46,7 @@ public class KafkaProducerApp {
 
 	public void sendMessage(String topic, String message) {
 
-		WebClientApp webClientExample = new WebClientApp();
+		WebClientApp webClientExample = new WebClientApp("campaigns");
 		
 		webClientExample.makeApiRequestAsync().subscribe(response -> {
 			
