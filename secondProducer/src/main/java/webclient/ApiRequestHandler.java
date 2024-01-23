@@ -2,6 +2,9 @@ package webclient;
 
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+import java.util.Arrays;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 public class ApiRequestHandler {
 
@@ -22,19 +25,35 @@ public class ApiRequestHandler {
 
 		return uriComponents;
 	}
-	
-	public UriComponentsBuilder buildApiRequestWithQueryParamsAndValues(String path, Object... queryParamsAndValues) {
-	    UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(BASE_URL).path(path);
 
-	    // Append query parameters if any
-	    if (queryParamsAndValues.length % 2 == 0) {
-	        for (int i = 0; i < queryParamsAndValues.length; i += 2) {
-	            uriComponentsBuilder.queryParam(String.valueOf(queryParamsAndValues[i]), queryParamsAndValues[i + 1]);
-	        }
-	    }
+	public UriComponents buildApiRequestaaa(String path, Object... pathVariables) {
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(BASE_URL).path(path);
 
-	    return uriComponentsBuilder;
-	}
+        
+        
+        Object[] pathVars;
+        Object[] queryParams;
+        if (pathVariables.length > 0) {
+            pathVars = Arrays.copyOfRange(pathVariables, 0, 1);
+            queryParams = Arrays.copyOfRange(pathVariables, 1, pathVariables.length);
 
+            // Expand path variables if any
+            UriComponents uriComponents = uriComponentsBuilder.buildAndExpand(pathVars);
+            
+            // Create a new UriComponentsBuilder based on the result of buildAndExpand
+            uriComponentsBuilder = UriComponentsBuilder.fromUri(uriComponents.toUri());
+
+            // Append query parameters if any
+            if (queryParams.length > 0) {
+                for (int i = 0; i < queryParams.length; i += 2) {
+                    // Accumulate query parameters
+                    uriComponentsBuilder.queryParam(String.valueOf(queryParams[i]), queryParams[i + 1]);
+                }
+            }
+        }
+
+        // Build the final UriComponents
+        return uriComponentsBuilder.build();
+    }
 
 }

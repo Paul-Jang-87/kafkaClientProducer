@@ -24,6 +24,9 @@ public class WebClientConfig {
 		case "campaigns_agents":
 			API_END_POINT = "/api/v2/outbound/campaigns/{campaignId}/agents/{userId}";
 			break;
+		case "prompts":
+			API_END_POINT = "/api/v2/architect/prompts/{promptId}/resources";
+			break;
 		default:
 			API_END_POINT = "Invalid api";
 			break;
