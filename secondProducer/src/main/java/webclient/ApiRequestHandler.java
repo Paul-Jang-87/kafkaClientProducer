@@ -3,56 +3,52 @@ package webclient;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Arrays;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
-public class ApiRequestHandler {
+public class ApiRequestHandler {//모든 api를 핸들링하는 클래스
 
-	private static final String BASE_URL = "https://api.apne2.pure.cloud";
+	private static final String BASE_URL = WebClientConfig.getBaseUrl();
 
-	public UriComponents buildApiRequest(String path, Object... pathVariables) {
-
-		UriComponents uriComponents = null;
-
-		// Append path variables if any
-		if (pathVariables.length > 0) {
-			uriComponents = UriComponentsBuilder.fromUriString(BASE_URL).path(path).buildAndExpand(pathVariables);
-
-		} else {
-			uriComponents = UriComponentsBuilder.fromUriString(BASE_URL).path(path).buildAndExpand();
-
-		}
-
-		return uriComponents;
-	}
-
-	public UriComponents buildApiRequestaaa(String path, Object... pathVariables) {
+	public UriComponents buildApiRequest(String path, Object... pathVariables) {//uri를 api에 맞게 커스터 마이징.
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(BASE_URL).path(path);
 
+        //path parameter가 몇 개 필요한지 파악
+        int cnt = 0;
+        
+        for (int i = 0; i < path.length(); i++) {
+            if (path.charAt(i) == '{') {
+                cnt++;
+            }
+        }
         
         
-        Object[] pathVars;
-        Object[] queryParams;
+        Object[] pathVars;  //path parameter를 복사하여 저장하는 변수
+        Object[] queryParams; //query parameter를 복사하여 저장하는 변수 
         if (pathVariables.length > 0) {
-            pathVars = Arrays.copyOfRange(pathVariables, 0, 1);
-            queryParams = Arrays.copyOfRange(pathVariables, 1, pathVariables.length);
+        	
+        	//buildApiRequest 함수를 사용할 때, 2번째 인자부터는 path parameter나 query parameter를 쓰면 된다. 
+        	//하지만 순서는 path parameter부터 쓴다. 
+            pathVars = Arrays.copyOfRange(pathVariables, 0, cnt);//index 0번째부터 index cnt까지 복사.
+            queryParams = Arrays.copyOfRange(pathVariables, cnt, pathVariables.length); //index cnt번째부터 index 끝까지 복사.
 
-            // Expand path variables if any
-            UriComponents uriComponents = uriComponentsBuilder.buildAndExpand(pathVars);
+            UriComponents uriComponents = uriComponentsBuilder.buildAndExpand(pathVars);//먼저path paramter를 expand해준다. 
             
-            // Create a new UriComponentsBuilder based on the result of buildAndExpand
             uriComponentsBuilder = UriComponentsBuilder.fromUri(uriComponents.toUri());
 
-            // Append query parameters if any
             if (queryParams.length > 0) {
                 for (int i = 0; i < queryParams.length; i += 2) {
                     // Accumulate query parameters
-                    uriComponentsBuilder.queryParam(String.valueOf(queryParams[i]), queryParams[i + 1]);
+                    uriComponentsBuilder.queryParam(String.valueOf(queryParams[i]), queryParams[i + 1]);//그 다음 query parameter. 
+                    																					//query parameter는 속성,값 한 쌍으로 이루어 졌기 때문에 
+                    																					//queryParams[i]는 속성, queryParams[i + 1]는 값이다.
                 }
             }
+            
+        }else { //path parameter나 query parameter가 아예 없이 endpoint만 있는 api
+            UriComponents uriComponents = uriComponentsBuilder.buildAndExpand(); 
+            
+            uriComponentsBuilder = UriComponentsBuilder.fromUri(uriComponents.toUri());
         }
 
-        // Build the final UriComponents
         return uriComponentsBuilder.build();
     }
 
