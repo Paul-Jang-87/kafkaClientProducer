@@ -1,10 +1,10 @@
-package com.example.secondProducer;
+package producer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SecondProducerApplicationTests {
+class MainrunningappTests {
 
 	@Test
 	void contextLoads() {
