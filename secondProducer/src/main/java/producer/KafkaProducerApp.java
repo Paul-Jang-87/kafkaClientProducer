@@ -16,7 +16,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
-import webclient.WebClientApp;
 
 @Service
 public class KafkaProducerApp {
@@ -46,65 +45,55 @@ public class KafkaProducerApp {
 
 	public void sendMessage(String topic, String message) {
 
-		WebClientApp webClientExample = new WebClientApp("prompts");
 		
-		webClientExample.makeApiRequestAsync().subscribe(response -> {
-			
-			Producer<String, String> producer = new KafkaProducer<String, String>(props);
-			System.out.println(topic + ", " + response);
+		Producer<String, String> producer = new KafkaProducer<String, String>(props);
 
-			String key = "";
-			String value = "";
+		String key = "";
+		String value = "";
 
-			try {
+		try {
 
-				SimpleDateFormat form = new SimpleDateFormat("hh:mm:ss");
-				Date now = new Date();
-				String nowtime = form.format(now);
+			SimpleDateFormat form = new SimpleDateFormat("hh:mm:ss");
+			Date now = new Date();
+			String nowtime = form.format(now);
 
-				for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 2; i++) {
 
-					key = String.valueOf(i);
-					value = nowtime + " " + String.valueOf(i) + " " + response + " " + message;
+				key = String.valueOf(i);
+				value = nowtime + " " + String.valueOf(i) +" "+ message;
 
-					ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
+				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
 
-					producer.send(record, new Callback() {
+				producer.send(record, new Callback() {
 
-						@Override
-						public void onCompletion(RecordMetadata metadata, Exception e) {
+					@Override
+					public void onCompletion(RecordMetadata metadata, Exception e) {
 
-							SimpleDateFormat form = new SimpleDateFormat("MM/dd::hh/mm/ss");
-							Date now = new Date();
-							String nowtime = form.format(now);
+						SimpleDateFormat form = new SimpleDateFormat("MM/dd::hh/mm/ss");
+						Date now = new Date();
+						String nowtime = form.format(now);
 
-							if (metadata != null) {
+						if (metadata != null) {
 
-								String infoString = String.format("Success partition : %d, offset : %d",
-										metadata.partition(), metadata.offset());
-								System.out.println(nowtime + " " + infoString);
+							String infoString = String.format("Success partition : %d, offset : %d",
+									metadata.partition(), metadata.offset());
+							System.out.println(nowtime + " " + infoString);
 
-							} else {
-								String infoString = String.format("Failed %s", e.getMessage());
-								System.err.println(infoString);
-							}
-
+						} else {
+							String infoString = String.format("Failed %s", e.getMessage());
+							System.err.println(infoString);
 						}
-					});
 
-				}
+					}
+				});
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				producer.close();
 			}
-			System.out.println("API Response: " + response);
-		}, error -> {
-			System.err.println(error);
-		});
 
-		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			producer.close();
+		}
 
 	}
 
