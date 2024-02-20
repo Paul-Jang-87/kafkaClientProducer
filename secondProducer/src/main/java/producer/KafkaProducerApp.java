@@ -16,8 +16,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class KafkaProducerApp {
 
 	private Properties props = new Properties();
@@ -48,21 +50,19 @@ public class KafkaProducerApp {
 		
 		Producer<String, String> producer = new KafkaProducer<String, String>(props);
 
-		String key = "";
+//		String key = ""; 
 		String value = "";
 
 		try {
 
-			SimpleDateFormat form = new SimpleDateFormat("hh:mm:ss");
-			Date now = new Date();
-			String nowtime = form.format(now);
+//			SimpleDateFormat form = new SimpleDateFormat("hh:mm:ss");
+//			Date now = new Date();
+//			String nowtime = form.format(now);
 
-			for (int i = 0; i < 2; i++) {
+				value = message;
 
-				key = String.valueOf(i);
-				value = nowtime + " " + String.valueOf(i) +" "+ message;
-
-				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
+//				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
+				ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, value);
 
 				producer.send(record, new Callback() {
 
@@ -77,17 +77,29 @@ public class KafkaProducerApp {
 
 							String infoString = String.format("Success partition : %d, offset : %d",
 									metadata.partition(), metadata.offset());
-							System.out.println(nowtime + " " + infoString);
+							log.info("{}  {}",nowtime,infoString);
 
 						} else {
-							String infoString = String.format("Failed %s", e.getMessage());
-							System.err.println(infoString);
+							
+							 String infoString = String.format("Failed %s", e.getMessage());
+		                        log.error(infoString);
+
+		                        int maxRetries = 3;
+		                        int retryCount = 0;
+		                        while (metadata == null && retryCount < maxRetries) {
+		                            log.info("Retrying...");
+		                            producer.send(record, this); // 메시지 재전송.
+		                            retryCount++;
+		                        }
+
+		                        if (metadata == null) {
+		                            log.error("Max retries reached. Unable to send the message.");
+		                        }
 						}
 
 					}
 				});
 
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class TopicsController {
 
 	@Autowired
@@ -50,13 +53,28 @@ public class TopicsController {
 		public String getApiData(@PathVariable("topic") String tranId, @RequestBody String msg) {
 
 			String topic_name = tranId;
-			System.out.println("토픽이름 : "+topic_name);
+			log.info("토픽이름 : {}",topic_name);
 			
 			List<CompletableFuture<Void>> futures = new ArrayList<>();
 	            CompletableFuture<Void> future = Producer.sendMessageAsync(topic_name, msg);
 	            futures.add(future);
 	        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-			System.out.println("프로듀서가 받음 : "+msg);
+			log.info("프로듀서가 받음 : {}",msg);
+
+			return "confirmation";
+		}
+	 
+	 @PostMapping("/apicallbot/post/{topic}")
+		public String getApiDataCallbot(@PathVariable("topic") String tranId, @RequestBody String msg) {
+
+			String topic_name = tranId;
+			log.info("토픽이름 : {}",topic_name);
+			
+			List<CompletableFuture<Void>> futures = new ArrayList<>();
+	            CompletableFuture<Void> future = Producer.sendMessageAsync(topic_name, msg);
+	            futures.add(future);
+	        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+	        log.info("토픽이름 : {}",topic_name);
 
 			return "confirmation";
 		}
