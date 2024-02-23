@@ -74,7 +74,7 @@ public class TopicsController {
 	            CompletableFuture<Void> future = Producer.sendMessageAsync(topic_name, msg);
 	            futures.add(future);
 	        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-	        log.info("토픽이름 : {}",topic_name);
+	        log.info("프로듀서가 받음 : {}",msg);
 
 			return "confirmation";
 		}
