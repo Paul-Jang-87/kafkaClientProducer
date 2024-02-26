@@ -9,10 +9,10 @@
 		<version>3.2.2-SNAPSHOT</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>secondProducer</artifactId>
+	<groupId>kafka</groupId>
+	<artifactId>producer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>secondProducer</name>
+	<name>producer</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
@@ -55,7 +55,6 @@
 			<artifactId>kafka-clients</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
@@ -68,8 +67,6 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!--
-		https://mvnrepository.com/artifact/com.mypurecloud/platform-client-v2 -->
 		<dependency>
 			<groupId>com.mypurecloud</groupId>
 			<artifactId>platform-client-v2</artifactId>
@@ -84,21 +81,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.14</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-		</dependency>
-
-
-		<!--
-		https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.14</version>
 		</dependency>
 
 

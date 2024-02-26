@@ -1,2 +1,2 @@
 @echo off
-java -jar target\secondProducer-0.0.1-SNAPSHOT.jar
+java -jar target\producer-0.0.1-SNAPSHOT.jar
