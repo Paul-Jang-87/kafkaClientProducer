@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,27 @@ import lombok.extern.slf4j.Slf4j;
 public class KafkaProducerApp {
 
 	private Properties props = new Properties();
+	
+	//sasl 설정 파트
+//	private String saslJassConfig = "org.apache.kafka.common.security.scram.ScramLoginModule required"
+//			+"username=\""
+//			+"sasl_id"       //SASL ID 기입
+//			+"\" "
+//			+"password=\""   //SASL PASSWORD 기입
+//			+"sasl_pwd"
+//			+"\";"
+//			;
 
 	@PostConstruct
 	public void initialize() {//카프카 프로듀서 서버 초기화
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092"); //서버,포트 설정. (실제로 서버와 포트 번호로 변경될 부분)
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		
+		//sasl 설정 파트
+//		props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,"SASL_PLAINTEXT");
+//		props.put(SaslConfigs.SASL_MECHANISM, "SCRAM-SHA-256");
+//		props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJassConfig);
 	}
 
 	@Async
