@@ -38,7 +38,7 @@ public class KafkaProducerApp {
 
 	@PostConstruct
 	public void initialize() {//카프카 프로듀서 서버 초기화
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092"); //서버,포트 설정. (실제로 서버와 포트 번호로 변경될 부분)
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092"); //서버,포트 설정. (실제로 서버와 포트 번호로 변경될 부분)172.23.15.103 9092
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		
