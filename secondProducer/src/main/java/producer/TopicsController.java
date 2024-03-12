@@ -62,10 +62,10 @@ public class TopicsController {
 			log.info("프로듀서가 받음 : {}",msg);
 
 			return "confirmation";
-		}
+	}
 	 
-	 @PostMapping("/apicallbot/post/{topic}")
-		public String getApiDataCallbot(@PathVariable("topic") String tranId, @RequestBody String msg) {
+	 @PostMapping("/360view/{topic}")
+		public String get360viewData(@PathVariable("topic") String tranId, @RequestBody String msg) {
 
 			String topic_name = tranId;
 			log.info("토픽이름 : {}",topic_name);
@@ -74,9 +74,10 @@ public class TopicsController {
 	            CompletableFuture<Void> future = Producer.sendMessageAsync(topic_name, msg);
 	            futures.add(future);
 	        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-	        log.info("프로듀서가 받음 : {}",msg);
+			log.info("프로듀서가 받음 : {}",msg);
 
 			return "confirmation";
-		}
+	}
+	 
 
 }
