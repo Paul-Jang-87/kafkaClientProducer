@@ -1,7 +1,5 @@
 package producer;
 
-
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -13,9 +11,9 @@ public class Mainrunningapp {
 
 	
 	public static void main(String[] args) {
-
-		SpringApplication.run(Mainrunningapp.class, args);
 		
+		SpringApplication.run(Mainrunningapp.class, args);
 
 	}
+	
 }

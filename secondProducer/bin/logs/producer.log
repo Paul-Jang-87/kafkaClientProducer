@@ -1,0 +1,446 @@
+INFO  24-03-12 10:25:40[main] [Mainrunningapp:50] - Starting Mainrunningapp using Java 21.0.1 with PID 15992 (D:\GitWorkSpace\kafkaClientProducer\secondProducer\target\classes started by 인포전스 in D:\GitWorkSpace\kafkaClientProducer\secondProducer)
+INFO  24-03-12 10:25:40[main] [Mainrunningapp:654] - No active profile set, falling back to 1 default profile: "default"
+INFO  24-03-12 10:25:43[main] [TomcatWebServer:109] - Tomcat initialized with port 8081 (http)
+INFO  24-03-12 10:25:43[main] [Http11NioProtocol:173] - Initializing ProtocolHandler ["http-nio-8081"]
+INFO  24-03-12 10:25:44[main] [ServletWebServerApplicationContext:296] - Root WebApplicationContext: initialization completed in 3926 ms
+INFO  24-03-12 10:25:45[main] [Http11NioProtocol:173] - Starting ProtocolHandler ["http-nio-8081"]
+INFO  24-03-12 10:25:46[main] [TomcatWebServer:241] - Tomcat started on port 8081 (http) with context path ''
+INFO  24-03-12 10:25:46[main] [Mainrunningapp:56] - Started Mainrunningapp in 7.486 seconds (process running for 11.539)
+INFO  24-03-12 10:26:14[http-nio-8081-exec-1] [DispatcherServlet:532] - Initializing Servlet 'dispatcherServlet'
+INFO  24-03-12 10:26:14[http-nio-8081-exec-1] [DispatcherServlet:554] - Completed initialization in 2 ms
+INFO  24-03-12 10:26:14[http-nio-8081-exec-1] [TopicsController:71] - 토픽이름 : first
+INFO  24-03-12 10:26:14[task-1] [ProducerConfig:370] - ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+INFO  24-03-12 10:26:14[task-1] [KafkaProducer:580] - [Producer clientId=producer-1] Instantiated an idempotent producer.
+INFO  24-03-12 10:26:15[task-1] [AppInfoParser:119] - Kafka version: 3.6.1
+INFO  24-03-12 10:26:15[task-1] [AppInfoParser:120] - Kafka commitId: 5e3c2b738d253ff5
+INFO  24-03-12 10:26:15[task-1] [AppInfoParser:121] - Kafka startTimeMs: 1710206775154
+INFO  24-03-12 10:26:16[kafka-producer-network-thread | producer-1] [Metadata:287] - [Producer clientId=producer-1] Cluster ID: _e1a1yTaTRCXYX_pLjTAjg
+INFO  24-03-12 10:26:16[task-1] [KafkaProducer:1295] - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+INFO  24-03-12 10:26:16[kafka-producer-network-thread | producer-1] [TransactionManager:505] - [Producer clientId=producer-1] ProducerId set to 0 with epoch 0
+INFO  24-03-12 10:26:16[kafka-producer-network-thread | producer-1] [KafkaProducerApp:97] - 03/12::10/26/16  Success partition : 0, offset : 0
+INFO  24-03-12 10:26:16[task-1] [Metrics:693] - Metrics scheduler closed
+INFO  24-03-12 10:26:16[task-1] [Metrics:697] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+INFO  24-03-12 10:26:16[task-1] [Metrics:703] - Metrics reporters closed
+INFO  24-03-12 10:26:16[task-1] [AppInfoParser:83] - App info kafka.producer for producer-1 unregistered
+INFO  24-03-12 10:26:16[http-nio-8081-exec-1] [TopicsController:77] - 프로듀서가 받음 : null
+INFO  24-03-12 10:27:21[http-nio-8081-exec-3] [TopicsController:71] - 토픽이름 : first
+INFO  24-03-12 10:27:21[task-2] [ProducerConfig:370] - ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-2
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+INFO  24-03-12 10:27:21[task-2] [KafkaProducer:580] - [Producer clientId=producer-2] Instantiated an idempotent producer.
+INFO  24-03-12 10:27:21[task-2] [AppInfoParser:119] - Kafka version: 3.6.1
+INFO  24-03-12 10:27:21[task-2] [AppInfoParser:120] - Kafka commitId: 5e3c2b738d253ff5
+INFO  24-03-12 10:27:21[task-2] [AppInfoParser:121] - Kafka startTimeMs: 1710206841530
+INFO  24-03-12 10:27:21[kafka-producer-network-thread | producer-2] [Metadata:287] - [Producer clientId=producer-2] Cluster ID: _e1a1yTaTRCXYX_pLjTAjg
+INFO  24-03-12 10:27:21[kafka-producer-network-thread | producer-2] [TransactionManager:505] - [Producer clientId=producer-2] ProducerId set to 1 with epoch 0
+INFO  24-03-12 10:27:21[task-2] [KafkaProducer:1295] - [Producer clientId=producer-2] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+INFO  24-03-12 10:27:21[kafka-producer-network-thread | producer-2] [KafkaProducerApp:97] - 03/12::10/27/21  Success partition : 0, offset : 1
+INFO  24-03-12 10:27:21[task-2] [Metrics:693] - Metrics scheduler closed
+INFO  24-03-12 10:27:21[task-2] [Metrics:697] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+INFO  24-03-12 10:27:21[task-2] [Metrics:703] - Metrics reporters closed
+INFO  24-03-12 10:27:21[task-2] [AppInfoParser:83] - App info kafka.producer for producer-2 unregistered
+INFO  24-03-12 10:27:21[http-nio-8081-exec-3] [TopicsController:77] - 프로듀서가 받음 : null
+INFO  24-03-12 10:34:44[main] [Mainrunningapp:50] - Starting Mainrunningapp using Java 21.0.1 with PID 15504 (D:\GitWorkSpace\kafkaClientProducer\secondProducer\target\classes started by 인포전스 in D:\GitWorkSpace\kafkaClientProducer\secondProducer)
+INFO  24-03-12 10:34:44[main] [Mainrunningapp:654] - No active profile set, falling back to 1 default profile: "default"
+INFO  24-03-12 10:34:49[main] [TomcatWebServer:109] - Tomcat initialized with port 8081 (http)
+INFO  24-03-12 10:34:49[main] [Http11NioProtocol:173] - Initializing ProtocolHandler ["http-nio-8081"]
+INFO  24-03-12 10:34:49[main] [ServletWebServerApplicationContext:296] - Root WebApplicationContext: initialization completed in 4474 ms
+INFO  24-03-12 10:34:51[main] [Http11NioProtocol:173] - Starting ProtocolHandler ["http-nio-8081"]
+INFO  24-03-12 10:34:51[main] [TomcatWebServer:241] - Tomcat started on port 8081 (http) with context path ''
+INFO  24-03-12 10:34:51[main] [Mainrunningapp:56] - Started Mainrunningapp in 8.23 seconds (process running for 12.294)
+INFO  24-03-12 10:35:01[http-nio-8081-exec-1] [DispatcherServlet:532] - Initializing Servlet 'dispatcherServlet'
+INFO  24-03-12 10:35:01[http-nio-8081-exec-1] [DispatcherServlet:554] - Completed initialization in 3 ms
+INFO  24-03-12 10:35:01[http-nio-8081-exec-1] [TopicsController:71] - 토픽이름 : first
+INFO  24-03-12 10:35:01[task-1] [ProducerConfig:370] - ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+INFO  24-03-12 10:35:02[task-1] [KafkaProducer:580] - [Producer clientId=producer-1] Instantiated an idempotent producer.
+INFO  24-03-12 10:35:02[task-1] [AppInfoParser:119] - Kafka version: 3.6.1
+INFO  24-03-12 10:35:02[task-1] [AppInfoParser:120] - Kafka commitId: 5e3c2b738d253ff5
+INFO  24-03-12 10:35:02[task-1] [AppInfoParser:121] - Kafka startTimeMs: 1710207302453
+INFO  24-03-12 10:35:03[kafka-producer-network-thread | producer-1] [Metadata:287] - [Producer clientId=producer-1] Cluster ID: _e1a1yTaTRCXYX_pLjTAjg
+INFO  24-03-12 10:35:03[kafka-producer-network-thread | producer-1] [TransactionManager:505] - [Producer clientId=producer-1] ProducerId set to 2 with epoch 0
+INFO  24-03-12 10:35:03[task-1] [KafkaProducer:1295] - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+INFO  24-03-12 10:35:03[kafka-producer-network-thread | producer-1] [KafkaProducerApp:97] - 03/12::10/35/03  Success partition : 0, offset : 2
+INFO  24-03-12 10:35:03[task-1] [Metrics:693] - Metrics scheduler closed
+INFO  24-03-12 10:35:03[task-1] [Metrics:697] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+INFO  24-03-12 10:35:03[task-1] [Metrics:703] - Metrics reporters closed
+INFO  24-03-12 10:35:03[task-1] [AppInfoParser:83] - App info kafka.producer for producer-1 unregistered
+INFO  24-03-12 10:35:03[http-nio-8081-exec-1] [TopicsController:77] - 프로듀서가 받음 : {"wcseq":501,"data02":"fwantastic"}
+INFO  24-03-12 10:50:36[main] [Mainrunningapp:50] - Starting Mainrunningapp using Java 21.0.1 with PID 13008 (D:\GitWorkSpace\kafkaClientProducer\secondProducer\target\classes started by 인포전스 in D:\GitWorkSpace\kafkaClientProducer\secondProducer)
+INFO  24-03-12 10:50:36[main] [Mainrunningapp:654] - No active profile set, falling back to 1 default profile: "default"
+INFO  24-03-12 10:50:41[main] [TomcatWebServer:109] - Tomcat initialized with port 8081 (http)
+INFO  24-03-12 10:50:41[main] [Http11NioProtocol:173] - Initializing ProtocolHandler ["http-nio-8081"]
+INFO  24-03-12 10:50:41[main] [ServletWebServerApplicationContext:296] - Root WebApplicationContext: initialization completed in 4228 ms
+INFO  24-03-12 10:50:43[main] [Http11NioProtocol:173] - Starting ProtocolHandler ["http-nio-8081"]
+INFO  24-03-12 10:50:43[main] [TomcatWebServer:241] - Tomcat started on port 8081 (http) with context path ''
+INFO  24-03-12 10:50:43[main] [Mainrunningapp:56] - Started Mainrunningapp in 7.925 seconds (process running for 12.074)
+INFO  24-03-12 10:50:58[http-nio-8081-exec-1] [DispatcherServlet:532] - Initializing Servlet 'dispatcherServlet'
+INFO  24-03-12 10:50:58[http-nio-8081-exec-1] [DispatcherServlet:554] - Completed initialization in 3 ms
+INFO  24-03-12 10:50:58[http-nio-8081-exec-1] [TopicsController:71] - 토픽이름 : first
+INFO  24-03-12 10:50:58[task-1] [ProducerConfig:370] - ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
+
+INFO  24-03-12 10:50:59[task-1] [KafkaProducer:580] - [Producer clientId=producer-1] Instantiated an idempotent producer.
+INFO  24-03-12 10:50:59[task-1] [AppInfoParser:119] - Kafka version: 3.6.1
+INFO  24-03-12 10:50:59[task-1] [AppInfoParser:120] - Kafka commitId: 5e3c2b738d253ff5
+INFO  24-03-12 10:50:59[task-1] [AppInfoParser:121] - Kafka startTimeMs: 1710208259476
+INFO  24-03-12 10:51:00[kafka-producer-network-thread | producer-1] [Metadata:287] - [Producer clientId=producer-1] Cluster ID: _e1a1yTaTRCXYX_pLjTAjg
+INFO  24-03-12 10:51:00[kafka-producer-network-thread | producer-1] [TransactionManager:505] - [Producer clientId=producer-1] ProducerId set to 3 with epoch 0
+INFO  24-03-12 10:51:00[task-1] [KafkaProducer:1295] - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+INFO  24-03-12 10:51:00[kafka-producer-network-thread | producer-1] [KafkaProducerApp:97] - 03/12::10/51/00  Success partition : 0, offset : 3
+INFO  24-03-12 10:51:00[task-1] [Metrics:693] - Metrics scheduler closed
+INFO  24-03-12 10:51:01[task-1] [Metrics:697] - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+INFO  24-03-12 10:51:01[task-1] [Metrics:703] - Metrics reporters closed
+INFO  24-03-12 10:51:01[task-1] [AppInfoParser:83] - App info kafka.producer for producer-1 unregistered
+INFO  24-03-12 10:51:01[http-nio-8081-exec-1] [TopicsController:77] - 프로듀서가 받음 : {"wcseq":501,"data02":"fwantastic"}
