@@ -109,7 +109,7 @@ public class TopicsController {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
 		log.info("{}, producer 로그 시작",dateFormat.format(today).toString());
-	
+		log.error("{}, producer 로그 시작",dateFormat.format(today).toString());;
 	}
 
 }
