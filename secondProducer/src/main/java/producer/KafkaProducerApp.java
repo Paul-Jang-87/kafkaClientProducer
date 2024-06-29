@@ -19,10 +19,13 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -32,7 +35,7 @@ import reactor.util.retry.Retry;
 @Service
 @Slf4j
 public class KafkaProducerApp {
-
+	private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
 	private Properties props = new Properties();
 	private static String PRODUCER_IP;
 	private static String PRODUCER_SASL;
@@ -112,20 +115,21 @@ public class KafkaProducerApp {
 					ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, msg.toString());
 
 					sendWithRetries(producer, record, 2)
-					.doOnSuccess(metadata -> {
-						sink.success(metadata);
-						producer.close();
-					}).doOnError(sink::error)
-					.onErrorResume(e -> {
-						log.error("Error 발생(onErrorResume)!!: {}", e.getMessage());
-						producer.close();
-						return Mono.empty();
-					}).subscribeOn(Schedulers.boundedElastic())
-					.subscribe();
+						.doOnSuccess(metadata -> {
+							sink.success(metadata);
+							
+						}).doOnError(sink::error)	// 메서드 참조(Method Reference) = 람다표현식 e -> sink.error(e)
+						.onErrorResume(e -> {
+							log.error("Error 발생(onErrorResume)!!: {}", e.getMessage());
+							errorLogger.error("Error 발생(onErrorResume)!!: {}", e.getMessage(), e);
+							producer.close();
+							return Mono.empty();
+						}).subscribeOn(Schedulers.boundedElastic())
+						.subscribe();
 
 				} catch (Exception e) {
-					sink.error(e);
-					producer.close(); // Close the producer on exception
+					sink.error(e);		// sink.error는 Throwable 객체를 인수로 받아야 한다.
+					producer.close(); 	// Close the producer on exception
 				} finally {
 					log.info("====== End sendMessage ======");
 				}

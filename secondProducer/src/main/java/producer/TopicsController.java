@@ -1,10 +1,10 @@
 package producer;
 
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 @Controller
 @Slf4j
 public class TopicsController {
-
+	private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
 	@Autowired
 	private KafkaProducerApp Producer;
 
@@ -39,8 +39,10 @@ public class TopicsController {
 			return Mono.just(ResponseEntity.ok().body(responseMessage));
 		}).doOnError(e -> {
 			log.error("카프카 서버로 메시지를 보내는 도중 에러가 발생하였습니다. : {}", e.getMessage());
+			errorLogger.error("카프카 서버로 메시지를 보내는 도중 에러가 발생하였습니다. : {}", e.getMessage(), e);
 		}).onErrorResume(e -> {
 			String errorMessage = String.format("카프카 서버와 통신 중 에러가 발생하였습니다. : %s", e.getMessage());
+			errorLogger.error("카프카 서버와 통신 중 에러가 발생하였습니다. : {}", e.getMessage(), e);
 			return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage));
 		});
 	}
@@ -60,12 +62,15 @@ public class TopicsController {
 				return Mono.just(ResponseEntity.ok().body(responseMessage));
 			}).doOnError(e -> {
 				log.error("카프카 서버로 메시지를 보내는 도중 에러가 발생하였습니다. : {}", e.getMessage());
+				errorLogger.error("카프카 서버로 메시지를 보내는 도중 에러가 발생하였습니다. : {}", e.getMessage(), e);
 			}).onErrorResume(e -> {
 				String errorMessage = String.format("카프카 서버와 통신 중 에러가 발생하였습니다. : %s", e.getMessage());
+				errorLogger.error("카프카 서버와 통신 중 에러가 발생하였습니다. : {}", e.getMessage(), e);
 				return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage));
 			});
 		} catch (Exception e) {
 			log.error("프로듀서쪽의 에러 : {}", e.getMessage());
+			errorLogger.error("프로듀서쪽의 에러 : {}", e.getMessage(), e);
 			return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비동기 진행과정 중에서 에러가 발생했습니다."));
 		}
 
@@ -84,21 +89,6 @@ public class TopicsController {
 	@GetMapping("/kafka-gw")
 	public Mono<ResponseEntity<String>> getHealthCheckKafka() throws Exception {
 		return Mono.just(ResponseEntity.ok("TEST RESPONSE"));
-	}
-
-	/**
-	 * [EKS] POD LivenessProbe 헬스체크
-	 */
-	private final Instant started = Instant.now();
-
-	@GetMapping("/healthz")
-	public ResponseEntity<String> healthCheck() {
-		Duration duration = Duration.between(started, Instant.now());
-		if (duration.getSeconds() > 10) {
-			return ResponseEntity.status(500).body("error: " + duration.getSeconds());
-		} else {
-			return ResponseEntity.ok("ok");
-		}
 	}
 	
 	
