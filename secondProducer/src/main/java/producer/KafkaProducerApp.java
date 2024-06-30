@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
-import java.util.concurrent.Executor;
 
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -24,18 +23,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
 
 @Service
 @Slf4j
 public class KafkaProducerApp {
+	
 	private static final Logger errorLogger = LoggerFactory.getLogger("ErrorLogger");
+
 	private Properties props = new Properties();
 	private static String PRODUCER_IP;
 	private static String PRODUCER_SASL;
@@ -52,8 +52,8 @@ public class KafkaProducerApp {
 	private String mechanism;
 
 	@Autowired
-	@Qualifier("WH_taskExecutor") // Injecting the taskExecutor bean defined in AsyncConfig
-	private Executor taskExecutor;
+	@Qualifier("WH_taskExecutor") 
+	private ThreadPoolTaskExecutor taskExecutor;
 
 	@PostConstruct
 	public void initialize() {
@@ -75,26 +75,22 @@ public class KafkaProducerApp {
 		props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, PRODUCER_PROTOCAL);
 		props.put(SaslConfigs.SASL_MECHANISM, PRODUCER_MECHANISM);
 		props.put(SaslConfigs.SASL_JAAS_CONFIG, saslJassConfig);
-		props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000); // 30 seconds timeout for requests
-        props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 60000); // 60 seconds maximum block time
 
 		log.info("프롭 : {}", props.toString());
 	}
 
 	public Mono<RecordMetadata> sendMessage(String topic, String key, String message) {
-
 		return Mono.create(sink -> {
-
-			log.info(" ");
-			log.info("====== ClassName : KafkaProducerApp & Method : sendMessage ======");
-			log.info("GcApp로 부터 온 토픽과 메시지 : {} / {}", topic, message);
-
-			taskExecutor.execute(() -> {
+			
+			if (!taskExecutor.getThreadPoolExecutor().isShutdown()) {
 				
-				Producer<String, String> producer = new KafkaProducer<>(props);
-				Map<String, Object> map = new HashMap<>();
+				taskExecutor.execute(() -> {
 
-				try {
+					log.info("====== Method : sendMessage ======");
+
+					Producer<String, String> producer = new KafkaProducer<>(props);
+					Map<String, Object> map = new HashMap<>();
+
 					LocalDateTime now = LocalDateTime.now();
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 					String topcDataIsueDtm = now.format(formatter);
@@ -114,26 +110,29 @@ public class KafkaProducerApp {
 
 					ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, msg.toString());
 
-					sendWithRetries(producer, record, 2)
-						.doOnSuccess(metadata -> {
-							sink.success(metadata);
-							
-						}).doOnError(sink::error)	// 메서드 참조(Method Reference) = 람다표현식 e -> sink.error(e)
-						.onErrorResume(e -> {
-							log.error("Error 발생(onErrorResume)!!: {}", e.getMessage());
-							errorLogger.error("Error 발생(onErrorResume)!!: {}", e.getMessage(), e);
+					sendWithRetries(producer, record, 2).doOnSuccess(metadata -> {
+						sink.success(metadata);
+					}).doOnError(e -> {
+						log.error("Error 발생(doOnError)!!: {}", e.getMessage());
+						errorLogger.error(e.getMessage(),e);
+						sink.error(e);
+					}).onErrorResume(e -> {
+						log.error("Error 발생(onErrorResume)!!: {}", e.getMessage());
+						errorLogger.error(e.getMessage(),e);
+						producer.close();
+						return Mono.empty();
+					}).doFinally(signalType -> {
+						Schedulers.boundedElastic().schedule(() -> {
 							producer.close();
-							return Mono.empty();
-						}).subscribeOn(Schedulers.boundedElastic())
-						.subscribe();
+							log.info("메시지 전송 후 producer를 닫았습니다.");
+						});
+					}).subscribeOn(Schedulers.boundedElastic()).subscribe();
 
-				} catch (Exception e) {
-					sink.error(e);		// sink.error는 Throwable 객체를 인수로 받아야 한다.
-					producer.close(); 	// Close the producer on exception
-				} finally {
-					log.info("====== End sendMessage ======");
-				}
-			});
+				});
+			} else {
+				log.warn("실행서비스를 닫는 중입니다 새로운 task를 받을 수 없습니다. ");
+				sink.error(new RuntimeException("실행서비스를 닫고 있습니다."));
+			}
 		});
 	}
 
@@ -151,7 +150,8 @@ public class KafkaProducerApp {
 				if (metadata != null && metadata.partition() != -1 && metadata.offset() != -1) {
 					String infoString = String.format("Success partition : %d, offset : %d", metadata.partition(),
 							metadata.offset());
-					log.info("카프카 서버로 메시지를 성공적으로 보냈습니다.토픽({}) : {}", nowtime, record.topic());
+					log.info("카프카 서버로 메시지를 성공적으로 보냈습니다({}) => 토픽 / 메시지 : '{}' / {} ", nowtime, record.topic(),
+							record.value());
 					log.info("카프카 서버로 부터 받은 토픽 정보 : {}", infoString);
 					sink.success(metadata);
 				} else {
@@ -167,9 +167,10 @@ public class KafkaProducerApp {
 
 			});
 
-		}).retryWhen(Retry.max(maxRetries)
-				.doBeforeRetry(retrySignal -> log.info("재시도... 횟수 {}", retrySignal.totalRetries() + 1))
-				.onRetryExhaustedThrow((retryBackoffSpec,
-						retrySignal) -> new RuntimeException("재시도 최고 횟수에 도달하였습니다. 메시지를 보낼 수 없습니다.")));
+		});
+//				.retryWhen(Retry.max(maxRetries)
+//				.doBeforeRetry(retrySignal -> log.info("재시도... 횟수 {}", retrySignal.totalRetries() + 1))
+//				.onRetryExhaustedThrow((retryBackoffSpec,
+//						retrySignal) -> new RuntimeException("재시도 최고 횟수에 도달하였습니다. 메시지를 보낼 수 없습니다.")));
 	}
 }
