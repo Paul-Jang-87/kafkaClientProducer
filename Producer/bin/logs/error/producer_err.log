@@ -1,1 +1,0 @@
-ERROR 24-03-06 15:36:26[kafka-producer-network-thread | producer-2] [Metadata:302] - [Producer clientId=producer-2] Metadata response reported invalid topics [callbot(임시)]
